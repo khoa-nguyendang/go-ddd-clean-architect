@@ -1,0 +1,99 @@
+version: "3.9"
+services:
+
+  api-server:
+    container_name: api-server
+    build: .
+    entrypoint: ./api-server -port=9090
+    image: api-server
+    restart: always
+    ports:
+      - 9090:9090
+    expose:
+      - 9090
+    environment:
+      - config="/config"
+    depends_on:
+      - mysql
+      - opensearch
+    networks:
+      - poc
+
+  opensearch:
+    image: opensearchproject/opensearch:latest
+    container_name: opensearch-node-poc
+    environment:
+      - cluster.name=opensearch-cluster # Name the cluster
+      - node.name=opensearch-poc # Name the node that will run in this container
+      - discovery.seed_hosts=opensearch-poc # Nodes to look for when discovering the cluster
+      - cluster.initial_cluster_manager_nodes=opensearch-poc # Nodes eligible to serve as cluster manager
+      - bootstrap.memory_lock=true # Disable JVM heap memory swapping
+      - "DISABLE_INSTALL_DEMO_CONFIG=true" # Prevents execution of bundled demo script which installs demo certificates and security configurations to OpenSearch
+      - "DISABLE_SECURITY_PLUGIN=true" # Disables security plugin
+      - "OPENSEARCH_JAVA_OPTS=-Xms8g -Xmx8g" # Set min and max JVM heap sizes to at least 50% of system RAM
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536 # maximum number of open files for the OpenSearch user, set to at least 65536 on modern systems
+        hard: 65536
+    ports:
+      - 9200:9200
+      - 9600:9600 # required for Performance Analyzer
+    logging:
+      driver: none
+    volumes:
+      - ./_volumes/data/opensearch:/usr/share/opensearch/data
+      # - ./_volumes/config/opensearch:/usr/share/opensearch/plugins/opensearch-security/securityconfig
+      # - ./_volumes/config/opensearch/custom-opensearch.yml:/usr/share/opensearch/config/opensearch.yml
+      # - ./_volumes/config/certificates:/usr/share/opensearch/config/certificates/
+    networks:
+      - poc
+
+  dashboards:
+    image: opensearchproject/opensearch-dashboards:latest
+    container_name: opensearch-dashboards-poc
+    ports:
+      - 5601:5601
+    expose:
+      - "5601"
+    environment:
+      - 'OPENSEARCH_HOSTS=["http://opensearch:9200"]'
+      - "DISABLE_SECURITY_DASHBOARDS_PLUGIN=true" # disables security dashboards plugin in OpenSearch Dashboards
+    depends_on:
+      - opensearch
+    networks:
+      - poc
+
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    restart: always
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - ./_volumes/mysqldb:/var/lib/mysql
+      - ./docker/mysqlseed:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_Password
+      - MYSQL_PASSWORD=app_Password
+      - MYSQL_USER=app_User
+      - MYSQL_DATABASE=app
+    healthcheck:
+      test: mysqladmin --user=$$MYSQL_USER --password=$$MYSQL_PASSWORD ping
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    logging:
+      driver: none
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - poc
+
+networks:
+  poc:
+    driver: bridge

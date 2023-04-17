@@ -1,0 +1,197 @@
+{
+	"info": {
+		"_postman_id": "0ada5bf0-f717-4132-a43c-2613252e937f",
+		"name": "App",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "1299823"
+	},
+	"item": [
+		{
+			"name": "step 1. create jobs index",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9090/jobs/opensearch/create-index?index=jobs",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"jobs",
+						"opensearch",
+						"create-index"
+					],
+					"query": [
+						{
+							"key": "index",
+							"value": "jobs"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "step 2. push documents to jobs index",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "localhost:9090/jobs/opensearch/push-documents/jobs?takes=150000&skips=0",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"jobs",
+						"opensearch",
+						"push-documents",
+						"jobs"
+					],
+					"query": [
+						{
+							"key": "takes",
+							"value": "150000",
+							"description": "s"
+						},
+						{
+							"key": "skips",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "step 3. search with job in mysql db",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9090/jobs/search-by-db?term=order_code&pageIndex=0&pageAmount=500",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"jobs",
+						"search-by-db"
+					],
+					"query": [
+						{
+							"key": "term",
+							"value": "order_code"
+						},
+						{
+							"key": "pageIndex",
+							"value": "0"
+						},
+						{
+							"key": "pageAmount",
+							"value": "500"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "step 4. search with job in opensearch cluster",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9090/jobs/search?term=order_code&pageIndex=0&pageAmount=50&index=jobs",
+					"host": [
+						"localhost"
+					],
+					"port": "9090",
+					"path": [
+						"jobs",
+						"search"
+					],
+					"query": [
+						{
+							"key": "term",
+							"value": "order_code"
+						},
+						{
+							"key": "pageIndex",
+							"value": "0"
+						},
+						{
+							"key": "pageAmount",
+							"value": "50"
+						},
+						{
+							"key": "index",
+							"value": "jobs"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Count number of documents inside index \"jobs\"",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9200/jobs/_count",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"jobs",
+						"_count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Trigger manual search for index \"jobs\"",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"from\": 0,\r\n    \"size\": 50,\r\n    \"query\": {\r\n        \"multi_match\": {\r\n            \"query\": \"order_code\",\r\n            \"fields\": [\r\n                \"PK\",\r\n                \"status\",\r\n                \"delivery_start_time\",\r\n                \"delivery_commit_time\",\r\n                \"ref_shipment_id\",\r\n                \"original_shipment_id\",\r\n                \"ref_order_id\",\r\n                \"client_order_id\",\r\n                \"client_order_code\",\r\n                \"partner_name\",\r\n                \"from_facility\",\r\n                \"to_facility\",\r\n                \"delivery_address\",\r\n                \"job_name\",\r\n                \"job_id\",\r\n                \"receiver_name\"\r\n            ]\r\n\r\n        }\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:9200/jobs/_search",
+					"host": [
+						"localhost"
+					],
+					"port": "9200",
+					"path": [
+						"jobs",
+						"_search"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
