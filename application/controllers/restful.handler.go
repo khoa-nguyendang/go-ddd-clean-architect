@@ -67,6 +67,15 @@ func (s *RestfulServer) addJob(c *gin.Context) {
 	})
 }
 
+func (s *RestfulServer) addTestJob(c *gin.Context) {
+	err := s.AddTestJob(c)
+	c.JSON(http.StatusOK, gin.H{
+		"payload": "",
+		"job":     "",
+		"err":     err,
+	})
+}
+
 func (s *RestfulServer) updateJob(c *gin.Context) {
 	var payload mds.Job
 
