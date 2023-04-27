@@ -1,22 +1,22 @@
 use app;
 
 CREATE TABLE IF NOT EXISTS comments (
-	pk BINARY(16) DEFAULT (UUID_TO_BIN(UUID(), 1)) PRIMARY KEY,
+	pk BINARY(16) PRIMARY KEY,
 	status  VARCHAR(50) DEFAULT '',
 	created_date DATETIME,
 	activated_date DATETIME,
 	is_deleted TINYINT NULL DEFAULT 0,
 	deleted_at  DATETIME NULL,
 	deleted_by_user_id  BINARY(16) NULL,
-	job_id BINARY(16) DEFAULT (UUID_TO_BIN(UUID(), 1)),
-	user_id BINARY(16) DEFAULT (UUID_TO_BIN(UUID(), 1)),
+	job_id BINARY(16),
+	user_id BINARY(16),
 	content TEXT,
 	rating FLOAT(7,2) DEFAULT 0,
 	is_approved TINYINT
 );
 
 CREATE TABLE IF NOT EXISTS companies (
-	pk BINARY(16) DEFAULT (UUID_TO_BIN(UUID(), 1)) PRIMARY KEY,
+	pk BINARY(16) PRIMARY KEY,
 	status  VARCHAR(50) DEFAULT '',
 	created_date DATETIME,
 	activated_date DATETIME,
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS companies (
 );
 
 CREATE TABLE IF NOT EXISTS jobs (
-	pk BINARY(16) DEFAULT (UUID_TO_BIN(UUID(), 1)) PRIMARY KEY,
+	pk BINARY(16) PRIMARY KEY,
 	status  VARCHAR(50) DEFAULT '',
 	created_date DATETIME,
 	activated_date DATETIME,
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS jobs (
 
 
 CREATE TABLE IF NOT EXISTS users (
-	pk BINARY(16) DEFAULT (UUID_TO_BIN(UUID(), 1)) PRIMARY KEY,
+	pk BINARY(16) PRIMARY KEY,
 	status  VARCHAR(50) DEFAULT '',
 	created_date DATETIME,
 	activated_date DATETIME,
@@ -84,7 +84,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 CREATE TABLE IF NOT EXISTS company_reviews (
-	pk BINARY(16) DEFAULT (UUID_TO_BIN(UUID(), 1)) PRIMARY KEY,
+	pk BINARY(16) PRIMARY KEY,
 	status  VARCHAR(50) DEFAULT '',
 	created_date DATETIME,
 	activated_date DATETIME,
@@ -151,20 +151,20 @@ BEGIN
         )
     VALUES
     (
-        UUID_TO_BIN(_PK, true), 
+        BIN_TO_UUID(_PK, true), 
         _status, 
         _created_date, 
         _activated_date,
-        UUID_TO_BIN(_order_id, true),
+        BIN_TO_UUID(_order_id, true),
         _content,
-        UUID_TO_BIN(_author_id, true),
+        BIN_TO_UUID(_author_id, true),
         _title,
         _tags,
-        UUID_TO_BIN(_company_id, true),
+        BIN_TO_UUID(_company_id, true),
         _rating,
         _short_description,
         _full_description,
-        UUID_TO_BIN(_topic_id, true),
+        BIN_TO_UUID(_topic_id, true),
         _code,
         _image_thumbnail_path,
         _video_thumbnail_path,

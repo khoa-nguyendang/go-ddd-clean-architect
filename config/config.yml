@@ -27,12 +27,21 @@ logger:
   Level: info
 
 mysql:
-  MysqlHost: mysql
-  MysqlPort: 3306
-  MysqlUser: app_User
-  MysqlPassword: app_Password
+  MysqlHost: host.docker.internal
+  MysqlPort: 4000
+  MysqlUser: root
+  MysqlPassword: 
   MysqlDbname: app
   MysqlDriver: mysql
+
+# mysql:
+#   MysqlHost: mysql
+#   MysqlPort: 3306
+#   MysqlUser: app_User
+#   MysqlPassword: app_Password
+#   MysqlDbname: app
+#   MysqlDriver: mysql
+
 
 kafka:
   Server: kafka:9092
