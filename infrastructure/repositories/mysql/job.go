@@ -83,14 +83,23 @@ func (r *Repo) DeleteJob(ctx context.Context, jobId string) (int, error) {
 // GetJob implements repositories.JobRepo
 func (r *Repo) GetJob(ctx context.Context, jobId string) (entities.Job, error) {
 	job := entities.Job{}
-	if err := r.db.QueryRowContext(ctx, JOB_GET_RAW, jobId).Scan(&job); err != nil {
-		r.logger.Infof("GetJob error for id: %v, err: %v", jobId, err)
+	if err := r.db.Get(&job, JOB_GET_RAW, jobId); err != nil {
+		r.logger.Errorf("GetJob error for id: %v, err: %v", jobId, err)
+		if errors.Cause(err) == sql.ErrNoRows {
+			return entities.Job{}, nil
+		}
+		return entities.Job{}, err
+	}
+	company := entities.Company{}
+	if err := r.db.Get(&company, COMPANY_GET, job.CompanyId); err != nil {
+		r.logger.Errorf("GetJob error for id: %v, err: %v", jobId, err)
 		if errors.Cause(err) == sql.ErrNoRows {
 			return entities.Job{}, nil
 		}
 		return entities.Job{}, err
 	}
 
+	r.logger.Infof("Found data: %v", job)
 	return job, nil
 }
 

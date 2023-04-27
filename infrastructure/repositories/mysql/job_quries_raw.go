@@ -4,13 +4,35 @@ const (
 	//JOB_GET get specific job base on input ID
 	// 	params: input string
 	// 	out: full job entity from database
-	JOB_GET_RAW string = `SELECT 
-		app.jobs.*, 
-		app.comments.*,
-		app.users.*,
-		app.companies.*
+	JOB_GET_RAW_Sing string = `SELECT BIN_TO_UUID(jobs.PK, true) as 'pk', 
+		BIN_TO_UUID(jobs.topic_id, true) as 'topic_id',
+		jobs.code as 'code',
+	FROM app.jobs `
+
+	//JOB_GET get specific job base on input ID
+	// 	params: input string
+	// 	out: full job entity from database
+	JOB_GET_RAW string = `SELECT BIN_TO_UUID(jobs.PK, true) as 'pk', 
+		jobs.status as 'status', 
+		jobs.created_date as 'created_date', 
+		jobs.activated_date as 'activated_date',
+		BIN_TO_UUID(jobs.order_id, true) as 'order_id',
+		jobs.content as 'content',
+		BIN_TO_UUID(jobs.author_id, true) as 'author_id',
+		jobs.title as 'title',
+		jobs.tags as 'tags',
+		BIN_TO_UUID(jobs.company_id, true) as 'company_id',
+		jobs.rating as 'rating',
+		jobs.short_description as 'short_description',
+		jobs.full_description as 'full_description',
+		BIN_TO_UUID(jobs.topic_id, true) as 'topic_id',
+		jobs.code as 'code',
+		jobs.image_thumbnail_path as 'image_thumbnail_path',
+		jobs.video_thumbnail_path as 'video_thumbnail_path',
+		jobs.is_approved as 'is_approved'
+
 	FROM app.jobs 
-	JOIN app.comments on comments.job_id = jobs.PK
+	LEFT JOIN app.comments on comments.job_id = jobs.PK
 	JOIN app.users on users.PK = jobs.author_id
 	JOIN app.companies on companies.PK = jobs.company_id
 	WHERE BIN_TO_UUID(jobs.PK, true)  = ?;`
@@ -22,29 +44,29 @@ const (
 	//		skip int
 	// 	out:
 	//		jobs entities from database match fetch and offset provided
-	JOBS_GET_RAW string = `SELECT BIN_TO_UUID(jobs.PK, true), 
-		jobs.status, 
-		jobs.created_date, 
-		jobs.activated_date,
-		BIN_TO_UUID(jobs.order_id, true),
-		jobs.content,
-		BIN_TO_UUID(jobs.author_id, true),
-		jobs.title,
-		jobs.tags,
-		BIN_TO_UUID(jobs.company_id, true),
-		jobs.rating,
-		jobs.short_description,
-		jobs.full_description,
-		BIN_TO_UUID(jobs.topic_id, true),
-		jobs.code,
-		jobs.image_thumbnail_path,
-		jobs.video_thumbnail_path,
-		jobs.is_approved,
+	JOBS_GET_RAW string = `SELECT BIN_TO_UUID(jobs.PK, true) as 'pk', 
+		jobs.status as 'status', 
+		jobs.created_date as 'created_date', 
+		jobs.activated_date as 'activated_date',
+		BIN_TO_UUID(jobs.order_id, true) as 'order_id',
+		jobs.content as 'content',
+		BIN_TO_UUID(jobs.author_id, true) as 'author_id',
+		jobs.title as 'title',
+		jobs.tags as 'tags',
+		BIN_TO_UUID(jobs.company_id, true) as 'company_id',
+		jobs.rating as 'rating',
+		jobs.short_description as 'short_description',
+		jobs.full_description as 'full_description',
+		BIN_TO_UUID(jobs.topic_id, true) as 'topic_id',
+		jobs.code as 'code',
+		jobs.image_thumbnail_path as 'image_thumbnail_path',
+		jobs.video_thumbnail_path as 'video_thumbnail_path',
+		jobs.is_approved as 'is_approved',
 		app.comments.*,
 		app.users.*,
 		app.companies.*
 		FROM app.jobs 
-		JOIN app.comments on comments.job_id = jobs.PK
+		LEFT JOIN app.comments on comments.job_id = jobs.PK
 		JOIN app.users on users.PK = jobs.author_id
 		JOIN app.companies on companies.PK = jobs.company_id
 		WHERE jobs.title like ?

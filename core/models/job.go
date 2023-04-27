@@ -17,5 +17,6 @@ type Job struct {
 	VideoThumbnailPath string    `json:"video_thumbnail_path" db:"video_thumbnail_path,omitempty"`
 	IsApproved         bool      `json:"is_approved" db:"is_approved,omitempty"`
 	Comments           []Comment `json:"comments" db:"comments,omitempty"`
-	Author             []User    `json:"author" db:"users,omitempty"`
+	Author             User      `json:"author" db:"users,omitempty"`
+	Company            Company   `json:"company" db:"company,omitempty"`
 }

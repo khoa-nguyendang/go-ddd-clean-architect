@@ -20,7 +20,7 @@ import (
 
 var (
 	jobSearchFields []string = []string{
-		"PK",
+		"pk",
 		"status",
 		"content",
 		"title",
