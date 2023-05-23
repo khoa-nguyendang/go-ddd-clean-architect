@@ -27,23 +27,57 @@ func NewJob(jobCache c.JobCache, jobRepo r.JobRepo, logger *logger.ApiLogger) s.
 }
 
 // AddJob implements bizs.JobBiz
-func (jb *JobBiz) AddJob(ctx context.Context, job interface{}) (mds.BaseReponse[mds.Job], error) {
-	panic("unimplemented")
+func (jb *JobBiz) AddJob(ctx context.Context, job mds.Job) (mds.BaseReponse[mds.Job], error) {
+	result, err := jb.jr.AddJob(ctx, job)
+
+	newjob := mds.Job{}
+	copier.Copy(&newjob, &result)
+	return mds.BaseReponse[mds.Job]{
+		Code:    200,
+		Message: "",
+		Errors:  make([]mds.ResponseError, 0),
+		Data:    []mds.Job{newjob},
+	}, err
+}
+
+// AddTestJob implements bizs.JobBiz
+func (jb *JobBiz) AddTestJob(ctx context.Context) error {
+	return jb.jr.AddTestJob(ctx)
 }
 
 // DeleteJob implements bizs.JobBiz
-func (jb *JobBiz) DeleteJob(ctx context.Context, jobId string) (mds.BaseReponse[mds.Job], error) {
-	panic("unimplemented")
+func (jb *JobBiz) DeleteJob(ctx context.Context, jobId string) (int, error) {
+	return jb.jr.DeleteJob(ctx, jobId)
 }
 
 // GetJob implements bizs.JobBiz
 func (jb *JobBiz) GetJob(ctx context.Context, jobId string) (mds.BaseReponse[mds.Job], error) {
-	panic("unimplemented")
+	result, err := jb.jr.GetJob(ctx, jobId)
+	jb.logger.Infof("GetJob %#v ", result)
+	newjob := mds.Job{}
+	newCompany := mds.Company{}
+	copier.Copy(&newjob, &result)
+	copier.Copy(&newCompany, &result.Company)
+	newjob.Company = newCompany
+	return mds.BaseReponse[mds.Job]{
+		Code:    200,
+		Message: "",
+		Errors:  make([]mds.ResponseError, 0),
+		Data:    []mds.Job{newjob},
+	}, err
 }
 
 // PatchJob implements bizs.JobBiz
-func (jb *JobBiz) PatchJob(ctx context.Context, job interface{}) (mds.BaseReponse[mds.Job], error) {
-	panic("unimplemented")
+func (jb *JobBiz) PatchJob(ctx context.Context, job mds.Job) (mds.BaseReponse[mds.Job], error) {
+	result, err := jb.jr.PatchJob(ctx, job)
+	newjob := mds.Job{}
+	copier.Copy(&newjob, &result)
+	return mds.BaseReponse[mds.Job]{
+		Code:    200,
+		Message: "",
+		Errors:  make([]mds.ResponseError, 0),
+		Data:    []mds.Job{newjob},
+	}, err
 }
 
 // SearchJob implements bizs.JobBiz
@@ -77,8 +111,17 @@ func (jb *JobBiz) SearchJobDatabase(ctx context.Context, term string, pageIndex 
 }
 
 // UpdateJob implements bizs.JobBiz
-func (jb *JobBiz) UpdateJob(ctx context.Context, job interface{}) (mds.BaseReponse[mds.Job], error) {
-	panic("unimplemented")
+func (jb *JobBiz) UpdateJob(ctx context.Context, job mds.Job) (mds.BaseReponse[mds.Job], error) {
+	result, err := jb.jr.UpdateJob(ctx, job)
+
+	newjob := mds.Job{}
+	copier.Copy(&newjob, &result)
+	return mds.BaseReponse[mds.Job]{
+		Code:    200,
+		Message: "",
+		Errors:  make([]mds.ResponseError, 0),
+		Data:    []mds.Job{newjob},
+	}, err
 }
 
 // UpdateJob implements bizs.JobBiz

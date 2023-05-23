@@ -4,24 +4,27 @@ services:
   api-server:
     container_name: api-server
     build: .
-    entrypoint: ./api-server -port=9090
+    entrypoint: ./api-server -port=19090
     image: api-server
     restart: always
     ports:
-      - 9090:9090
+      - 19090:19090
     expose:
-      - 9090
+      - 19090
     environment:
       - config="/config"
     depends_on:
-      - mysql
+      # - mysql
       - opensearch
     networks:
       - poc
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
 
   opensearch:
     image: opensearchproject/opensearch:latest
     container_name: opensearch-node-poc
+    # restart: always
     environment:
       - cluster.name=opensearch-cluster # Name the cluster
       - node.name=opensearch-poc # Name the node that will run in this container
@@ -36,13 +39,13 @@ services:
         soft: -1
         hard: -1
       nofile:
-        soft: 65536 # maximum number of open files for the OpenSearch user, set to at least 65536 on modern systems
-        hard: 65536
+        soft: 262144 # maximum number of open files for the OpenSearch user, set to at least 65536 on modern systems
+        hard: 262144
     ports:
       - 9200:9200
       - 9600:9600 # required for Performance Analyzer
-    logging:
-      driver: none
+    # logging:
+    #   driver: none
     volumes:
       - ./_volumes/data/opensearch:/usr/share/opensearch/data
       # - ./_volumes/config/opensearch:/usr/share/opensearch/plugins/opensearch-security/securityconfig

@@ -4,7 +4,7 @@ package models
 type User struct {
 	BaseModel
 	CompanyId      string  `json:"company_name" db:"company_name,omitempty"`
-	FirstName      string  `json:"fist_name" db:"fist_name,omitempty"`
+	FirstName      string  `json:"first_name" db:"first_name,omitempty"`
 	MidName        string  `json:"mid_name" db:"mid_name,omitempty"`
 	LastName       string  `json:"last_name" db:"last_name,omitempty"`
 	Address        string  `json:"address" db:"address,omitempty"`

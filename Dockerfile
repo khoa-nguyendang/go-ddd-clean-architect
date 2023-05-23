@@ -11,3 +11,4 @@ RUN go build  -tags musl -ldflags='-s -w '  -o api-server ./cmd/...
 FROM scratch
 COPY --from=builder /app/config /config
 COPY --from=builder /app/api-server /api-server
+COPY --from=builder /app/infrastructure/migrations /migrations

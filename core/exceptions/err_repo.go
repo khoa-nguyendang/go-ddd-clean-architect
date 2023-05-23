@@ -14,25 +14,25 @@ var (
 	ErrQueryData = errors.New("query data by constrain failed")
 
 	// ErrGetItemFromDB to tell caller, get item failure
-	ErrGetItemFromDB = errors.New("get item from dynamoDB failure")
+	ErrGetItemFromDB = errors.New("get item from db failure")
 
 	// ErrItemNotExistsInDB to tell there has no item by given constrain
-	ErrItemNotExistsInDB = errors.New("item not exists in dynamoDB")
+	ErrItemNotExistsInDB = errors.New("item not exists in db")
 
 	// ErrItemUnmarshalMap to describe get item but unmarshal failure
 	ErrItemUnmarshalMap = errors.New("unmarshal item to struct failure")
 
-	// ErrItemMarshalMap to describe struct marshal to dynamoDB item  failure
-	ErrItemMarshalMap = errors.New("marshal struct to dynamoDB item failure")
+	// ErrItemMarshalMap to describe struct marshal to db item  failure
+	ErrItemMarshalMap = errors.New("marshal struct to db item failure")
 
 	// ErrItemMarshalToDBFailed -
-	ErrItemMarshalToDBFailed = errors.New("marshal struct to dynamoDB item failed")
+	ErrItemMarshalToDBFailed = errors.New("marshal struct to db item failed")
 
-	// ErrPutItem to describe put item into dynamoDB failure
-	ErrPutItem = errors.New("put item into dynamoDB failure")
+	// ErrPutItem to describe put item into db failure
+	ErrPutItem = errors.New("put item into db failure")
 
-	// ErrUpdateItem to describe update item from dynamoDB failure
-	ErrUpdateItem = errors.New("update item from dynamoDB failure")
+	// ErrUpdateItem to describe update item from db failure
+	ErrUpdateItem = errors.New("update item from db failure")
 
 	// ErrItemNotExists to tell item is not exists in db
 	ErrItemNotExists = errors.New("item not exists")
@@ -43,14 +43,14 @@ var (
 	// ErrGenUniqShipmentCode happens when reached max retry count for getting unique shipment_code
 	ErrGenUniqShipmentCode = errors.New("error getting uniq shipment_code max retry reached")
 
-	// ErrUnmarshalPagination describe unmarshal unmarshal dynamodb last evaluated key failed
+	// ErrUnmarshalPagination describe unmarshal unmarshal db last evaluated key failed
 	ErrUnmarshalPagination = errors.New("unmarshal dynamo pagination struct failed")
 
-	// ErrUnmarshalMapList describe unmarshal map list from dynamodb has error
-	ErrUnmarshalMapList = errors.New("unmarshal dynamodb map list failed")
+	// ErrUnmarshalMapList describe unmarshal map list from db has error
+	ErrUnmarshalMapList = errors.New("unmarshal db map list failed")
 
-	// ErrUnmarshalMap describe unmarshal map from dynamodb has error
-	ErrUnmarshalMap = errors.New("unmarshal dynamodb map failed")
+	// ErrUnmarshalMap describe unmarshal map from db has error
+	ErrUnmarshalMap = errors.New("unmarshal db map failed")
 
 	// ErrNotImpl function not implement yet
 	ErrNotImpl = errors.New("this function not implement yet")
@@ -63,7 +63,7 @@ var (
 
 	ErrJobNotFound = errors.New("job not found from db")
 
-	ErrUnknownItemType = errors.New("unknown entity item type of dynamodb")
+	ErrUnknownItemType = errors.New("unknown entity item type of db")
 
 	ErrGetShipmentDetailByTTL = errors.New("unable to fetch shipments from ods ttl list")
 
@@ -115,11 +115,11 @@ var (
 	// ErrTransactWrite ...
 	ErrTransactWrite = errors.New("transact write to dynamo failed")
 
-	// ErrDynamodbMarshalList ...
-	ErrDynamodbMarshalList = errors.New("dynamodb marshal list item failed")
+	// ErrdbMarshalList ...
+	ErrdbMarshalList = errors.New("db marshal list item failed")
 
-	// ErrDynamoDBBatchGetItems -
-	ErrDynamoDBBatchGetItems = errors.New("dynamodb batch get items failed")
+	// ErrdbBatchGetItems -
+	ErrdbBatchGetItems = errors.New("db batch get items failed")
 
 	// ErrUpdateInboundScanResultFailed -
 	ErrUpdateInboundScanResultFailed = errors.New("update inbound scan result failed")

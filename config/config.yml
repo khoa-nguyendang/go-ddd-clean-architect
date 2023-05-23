@@ -26,6 +26,14 @@ logger:
   Encoding: json
   Level: info
 
+# mysql:
+#   MysqlHost: host.docker.internal
+#   MysqlPort: 4000
+#   MysqlUser: root
+#   MysqlPassword: 
+#   MysqlDbname: app
+#   MysqlDriver: mysql
+
 mysql:
   MysqlHost: mysql
   MysqlPort: 3306
@@ -33,6 +41,7 @@ mysql:
   MysqlPassword: app_Password
   MysqlDbname: app
   MysqlDriver: mysql
+
 
 kafka:
   Server: kafka:9092

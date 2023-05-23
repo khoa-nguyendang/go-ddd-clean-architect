@@ -20,6 +20,14 @@ logger:
   Encoding: json
   Level: debug
 
+# mysql:
+#   MysqlHost: host.docker.internal
+#   MysqlPort: 4000
+#   MysqlUser: root
+#   MysqlPassword: 
+#   MysqlDbname: app
+#   MysqlDriver: mysql
+
 mysql:
   MysqlHost: mysql
   MysqlPort: 3306

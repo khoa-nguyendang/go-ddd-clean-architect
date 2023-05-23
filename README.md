@@ -110,3 +110,19 @@ try this command:
 ```
 sudo sysctl -w vm.max_map_count=262144
 ```
+
+
+create new migration
+```
+migrate create -ext sql -dir infrastructure/migrations -seq version_103
+```
+
+test migration
+```
+#issue of tidb
+set global tidb_skip_isolation_level_check=1
+
+
+#start migrate
+migrate -source "file://infrastructure/migrations" -database "mysql://root@tcp(localhost:4000)/app" up 1
+```

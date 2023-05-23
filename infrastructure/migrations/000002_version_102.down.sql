@@ -1,0 +1,41 @@
+INSERT INTO jobs(
+        PK, 
+        status, 
+        created_date, 
+        activated_date, 
+        order_id, 
+        content, 
+        author_id, 
+        title, 
+        tags, 
+        company_id, 
+        rating, 
+        short_description, 
+        full_description,
+        topic_id,
+        code,
+        image_thumbnail_path,
+        video_thumbnail_path,
+        is_approved
+        )
+    VALUES
+    (
+        UUID_TO_BIN('48488a6c-166f-4bc7-a466-263a271384ff', true), 
+        'active', 
+        '2022-04-20 07:07:07', 
+        '2022-04-20 07:07:07', 
+        UUID_TO_BIN('48488a6c-166f-4bc7-a466-263a271384ff', true),
+        'This is first job description',
+        UUID_TO_BIN('c3829ab1-01c5-4fdf-b7d7-cc88379cbb94', true),
+        'A sample job title',
+        'jobs,data,ai',
+        UUID_TO_BIN('c2458585-7762-4ed8-a09a-f8b374a71eb4', true),
+        5.0,
+        'A short description',
+        'A full description',
+        UUID_TO_BIN('c2458585-7762-4ed8-a09a-f8b374a71eb4', true),
+        'NXV1',
+        '',
+        '',
+        1
+    )

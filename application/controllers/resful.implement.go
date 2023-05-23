@@ -14,12 +14,17 @@ func (s *RestfulServer) Ping(ctx context.Context, jobId string) (mds.BaseReponse
 }
 
 // AddJob implements AppServer
-func (s *RestfulServer) AddJob(ctx context.Context, job interface{}) (mds.BaseReponse[mds.Job], error) {
-	return s.jb.UpdateJob(ctx, job)
+func (s *RestfulServer) AddJob(ctx context.Context, job mds.Job) (mds.BaseReponse[mds.Job], error) {
+	return s.jb.AddJob(ctx, job)
+}
+
+// AddJob implements AppServer
+func (s *RestfulServer) AddTestJob(ctx context.Context) error {
+	return s.jb.AddTestJob(ctx)
 }
 
 // DeleteJob implements AppServer
-func (s *RestfulServer) DeleteJob(ctx context.Context, jobId string) (mds.BaseReponse[mds.Job], error) {
+func (s *RestfulServer) DeleteJob(ctx context.Context, jobId string) (int, error) {
 	return s.jb.DeleteJob(ctx, jobId)
 }
 
@@ -34,7 +39,7 @@ func (s *RestfulServer) SearchJobDatabase(ctx context.Context, term string, page
 }
 
 // UpdateJob implements AppServer
-func (s *RestfulServer) UpdateJob(ctx context.Context, job interface{}) (mds.BaseReponse[mds.Job], error) {
+func (s *RestfulServer) UpdateJob(ctx context.Context, job mds.Job) (mds.BaseReponse[mds.Job], error) {
 	return s.jb.UpdateJob(ctx, job)
 }
 
@@ -44,7 +49,7 @@ func (s *RestfulServer) GetJob(ctx context.Context, jobId string) (mds.BaseRepon
 }
 
 // PatchJob implements AppServer
-func (s *RestfulServer) PatchJob(ctx context.Context, job interface{}) (mds.BaseReponse[mds.Job], error) {
+func (s *RestfulServer) PatchJob(ctx context.Context, job mds.Job) (mds.BaseReponse[mds.Job], error) {
 	return s.jb.PatchJob(ctx, job)
 }
 
