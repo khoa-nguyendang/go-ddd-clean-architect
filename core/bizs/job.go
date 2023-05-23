@@ -53,8 +53,12 @@ func (jb *JobBiz) DeleteJob(ctx context.Context, jobId string) (int, error) {
 // GetJob implements bizs.JobBiz
 func (jb *JobBiz) GetJob(ctx context.Context, jobId string) (mds.BaseReponse[mds.Job], error) {
 	result, err := jb.jr.GetJob(ctx, jobId)
+	jb.logger.Infof("GetJob %#v ", result)
 	newjob := mds.Job{}
+	newCompany := mds.Company{}
 	copier.Copy(&newjob, &result)
+	copier.Copy(&newCompany, &result.Company)
+	newjob.Company = newCompany
 	return mds.BaseReponse[mds.Job]{
 		Code:    200,
 		Message: "",

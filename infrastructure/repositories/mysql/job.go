@@ -90,6 +90,7 @@ func (r *Repo) GetJob(ctx context.Context, jobId string) (entities.Job, error) {
 		}
 		return entities.Job{}, err
 	}
+	r.logger.Infof("Found job: %#v", job)
 	company := entities.Company{}
 	if err := r.db.Get(&company, COMPANY_GET, job.CompanyId); err != nil {
 		r.logger.Errorf("GetJob error for id: %v, err: %v", jobId, err)
@@ -99,7 +100,7 @@ func (r *Repo) GetJob(ctx context.Context, jobId string) (entities.Job, error) {
 		return entities.Job{}, err
 	}
 
-	r.logger.Infof("Found data: %v", job)
+	r.logger.Infof("Found company: %#v", company)
 	return job, nil
 }
 

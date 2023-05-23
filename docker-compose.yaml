@@ -69,33 +69,33 @@ services:
     networks:
       - poc
 
-  # mysql:
-  #   container_name: mysql
-  #   image: mysql:8
-  #   restart: always
-  #   ports:
-  #     - 3306:3306
-  #   expose:
-  #     - 3306
-  #   volumes:
-  #     - ./_volumes/mysqldb:/var/lib/mysql
-  #     - ./docker/mysqlseed:/docker-entrypoint-initdb.d
-  #   environment:
-  #     - MYSQL_ROOT_PASSWORD=root_Password
-  #     - MYSQL_PASSWORD=app_Password
-  #     - MYSQL_USER=app_User
-  #     - MYSQL_DATABASE=app
-  #   healthcheck:
-  #     test: mysqladmin --user=$$MYSQL_USER --password=$$MYSQL_PASSWORD ping
-  #     interval: 5s
-  #     timeout: 3s
-  #     retries: 10
-  #   logging:
-  #     driver: none
-  #   extra_hosts:
-  #     - "host.docker.internal:host-gateway"
-  #   networks:
-  #     - poc
+  mysql:
+    container_name: mysql
+    image: mysql:8
+    restart: always
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - ./_volumes/mysqldb:/var/lib/mysql
+      - ./docker/mysqlseed:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_Password
+      - MYSQL_PASSWORD=app_Password
+      - MYSQL_USER=app_User
+      - MYSQL_DATABASE=app
+    healthcheck:
+      test: mysqladmin --user=$$MYSQL_USER --password=$$MYSQL_PASSWORD ping
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    logging:
+      driver: none
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - poc
 
 networks:
   poc:
